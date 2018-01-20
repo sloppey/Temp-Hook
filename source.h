@@ -1,5 +1,5 @@
 
-  void* Mem_Edit(DWORD address, void* hook, bool revert=false){
+  void* placeHook(DWORD address, void* hook, bool revert=false){
 		DWORD oldprot;
 		if (!revert){
 		    //placing hook
