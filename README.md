@@ -31,9 +31,9 @@ Example
 	placeHook(_CRASH, omem, true); //revert changes to prevent roblox from detecting the change
 
 ```
-Example 2(Getting roblox's lua state, by hooking onto getfield)
+Example 2(Getting roblox's lua state, by hooking onto index2adr)
 ```C
-	//getfield gets called all the time, allowing our hook to retrieve and store the state somewhere else in memory 
+	//index2adr gets called all the time, allowing our hook to retrieve and store the state somewhere else in memory 
 	//which we can then use for later use.
 	
 	//removed for now
