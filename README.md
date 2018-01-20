@@ -1,5 +1,5 @@
 Source
-```Lua
+```C
 void* placeHook(DWORD address, void* hook, bool revert=false){
 		DWORD oldprot;
 		if (!revert){
@@ -12,7 +12,7 @@ void* placeHook(DWORD address, void* hook, bool revert=false){
 	}
 ```
 Example
-```C++
+```C
 	DWORD _CRASH = format(0x4BEE50); //function what roblos calls when it crashes
 	void* omem = placeHook(_CRASH, Hook); //store the location's memory into 'omem' before changing it
 	typedef int(__cdecl * randomhook)(int, int, int, int, int);
