@@ -1,4 +1,5 @@
-# Temp-Hook 
+
+```Lua
 void* placeHook(DWORD address, void* hook, bool revert=false){
 		DWORD oldprot;
 		if (!revert){
@@ -9,3 +10,4 @@ void* placeHook(DWORD address, void* hook, bool revert=false){
 		    //reverting back to prevent roblox from detecting our hook
 		}
 	}
+```
