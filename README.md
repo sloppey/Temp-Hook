@@ -22,7 +22,7 @@ Example
 	}
 
 
-	DWORD _CRASH = format(0x4BEE50); //function what roblos eventually calls when it crashes
+	DWORD _CRASH = format(0x4BEE50); //function what roblox eventually calls when it crashes
 	void* omem = placeHook(_CRASH, Hook); //store the location's memory into 'omem' before changing it
 	typedef int(__cdecl * rndFunc)(int, int, int, int, int);
 	rndFunc rH = (rndFunc)ASLR(0x72CF00);
