@@ -13,8 +13,8 @@ void* placeHook(DWORD address, void* hook, bool revert=false){
 ```
 Example
 ```C
-	DWORD _CRASH = format(0x4BEE50); //function what roblos calls when it crashes
-	void* omem;
+	&#x1F534;DWORD _CRASH = format(0x4BEE50); //function what roblos calls when it crashes
+	&#x1F534void* omem;
 	omem = placeHook(_CRASH, Hook); //store the location's memory into 'omem' before changing it
 	typedef int(__cdecl * randomhook)(int, int, int, int, int);
 	randomhook rH = (randomhook)ASLR(0x72CF00);
