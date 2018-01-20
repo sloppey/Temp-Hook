@@ -14,7 +14,8 @@ void* placeHook(DWORD address, void* hook, bool revert=false){
 Example
 ```C
 	DWORD _CRASH = format(0x4BEE50); //function what roblos calls when it crashes
-	void* omem = placeHook(_CRASH, Hook); //store the location's memory into 'omem' before changing it
+	void* omem;
+	omem = placeHook(_CRASH, Hook); //store the location's memory into 'omem' before changing it
 	typedef int(__cdecl * randomhook)(int, int, int, int, int);
 	randomhook rH = (randomhook)ASLR(0x72CF00);
 	rH(1, 2, 3, 4, 5); //cause roblox to crash by calling a function with incorrect args
