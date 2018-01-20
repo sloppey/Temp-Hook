@@ -34,7 +34,7 @@ Example
 Example 2(Getting roblox's lua state, by hooking onto index2adr)
 ```C
 	//index2adr gets called all the time, allowing our hook to retrieve and store the state somewhere else in memory 
-	//which we can then use for later use.
+	//which we can then use later.
 	
 	//removed for now
 
