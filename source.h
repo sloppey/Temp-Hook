@@ -3,7 +3,7 @@
 		DWORD oldprot;
 		if (!revert){
 		    //placing hook
-			return (void*)0;
+		return (void*)0;
 		}
 		else{
 		    //reverting back to prevent roblox from detecting our hook
