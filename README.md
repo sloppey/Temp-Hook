@@ -17,7 +17,7 @@ Example
 	void* omem = placeHook(_CRASH, Hook); //store the location's memory into 'omem' before changing it
 	typedef int(__cdecl * randomhook)(int, int, int, int, int);
 	randomhook rH = (randomhook)ASLR(0x72CF00);
-	rH(1, 2, 3, 4, 5); //cause roblox to crash by calling a function with incorrect args;
+	rH(1, 2, 3, 4, 5); //cause roblox to crash by calling a function with incorrect args
 	placeHook(_CRASH, omem, true); //revert changes to prevent roblox from detecting the change
 
 ```
