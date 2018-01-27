@@ -20,30 +20,50 @@ void* placeHook(DWORD address, void* hook, bool revert = false){
 	}
 }
 ```
-Example
+Example (Getting roblox's lua state by hooking onto the VM)
 ```C
-	inline void Hook(){
-	MessageBoxA(0, "Hooked!", "Hooked!", 0); //!unsafe as this messagebox will prevent the memory from changing back
-						 
+	DWORD pro_out = format(0x719D1D);
+int rstate_hk=0;
+__declspec(naked) void vm_hook(){
+	DWORD _eax;
+	__asm{
+	me:
+		mov _eax, eax
+		mov eax, [ebp+8]
+		mov rstate_hk, eax
+		mov eax, _eax
+	st:
+		push    ebx
+		mov     ebx, esp
+		sub     esp, 8
+		and     esp, 0FFFFFFF0h
+		add     esp, 4
+	    push    ebp
+		mov     ebp, [ebx + 4]
+		mov[esp + 0Ch + 8], ebp
+		mov     ebp, esp
+		sub     esp, 138h
+		push    esi
+		mov     esi, [ebx + 8]
+		push    edi
+		lea     ecx, [esi + 1Ch]
+		lea     eax, [esi + 0Ch]
+		mov[ebp - 24h], ecx
+		mov[ebp - 4Ch], eax
+	ed:
+		jmp pro_out
 	}
+}
 
-
-	DWORD _CRASH = format(0x4BEE50); //function what roblox eventually calls when it crashes
-	void* omem = placeHook(_CRASH, Hook); //store the location's memory into 'omem' before changing it
-	typedef int(__cdecl * rndFunc)(int, int, int, int, int);
-	rndFunc rH = (rndFunc)ASLR(0x72CF00);
-	rH(1, 2, 3, 4, 5); //cause roblox to crash by calling a function with incorrect args
-			   //this will call our 'Hook' function instead
-	placeHook(_CRASH, omem, true); //revert changes to prevent roblox from detecting the change
-
-```
-Example 2(Getting roblox's lua state, by hooking onto index2adr)
-```C
-	//index2adr gets called all the time, allowing our hook to retrieve and store the state somewhere else in memory 
-	//which we can then use later.
-	
-	//removed for now
-
+void Init(){
+void* old = placeHook(format(0x719CF0), vm_hook);
+	do{ Sleep(1); } while (rstate_hk == 0);
+	placeHook(format(0x719CF0), old, 1);
+	rbx::getfield(rstate_hk, -10002, "print");
+	rbx::pushstring(rstate_hk, "hello world!");
+	rbx::pcall(rstate_hk, 1, 0, 0);
+}
 
 
 ```
+
