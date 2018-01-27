@@ -22,7 +22,7 @@ void* placeHook(DWORD address, void* hook, bool revert = false){
 ```
 Example (Getting roblox's lua state by hooking onto the VM)
 ```C
-	DWORD pro_out = format(0x719D1D);
+DWORD pro_out = format(0x719D1D);
 int rstate_hk=0;
 __declspec(naked) void vm_hook(){
 	DWORD _eax;
