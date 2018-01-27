@@ -22,45 +22,52 @@ void* placeHook(DWORD address, void* hook, bool revert = false){
 ```
 Example (Getting roblox's lua state by hooking onto the VM)
 ```C
-DWORD pro_out = format(0x719D1D);
+DWORD pro_out = format(0x719F51);
 int rstate_hk=0;
-__declspec(naked) void vm_hook(){
+__declspec(naked) void vm_hook(int rs, int i){
 	DWORD _eax;
 	__asm{
-	me:
-		mov _eax, eax
-		mov eax, [ebp+8]
-		mov rstate_hk, eax
-		mov eax, _eax
-	st:
-		push    ebx
-		mov     ebx, esp
-		sub     esp, 8
-		and     esp, 0FFFFFFF0h
-		add     esp, 4
-	    push    ebp
-		mov     ebp, [ebx + 4]
-		mov[esp + 0Ch + 8], ebp
-		mov     ebp, esp
-		sub     esp, 138h
-		push    esi
-		mov     esi, [ebx + 8]
-		push    edi
-		lea     ecx, [esi + 1Ch]
-		lea     eax, [esi + 0Ch]
-		mov[ebp - 24h], ecx
-		mov[ebp - 4Ch], eax
-	ed:
+
+		me:
+			mov _eax, eax
+			mov eax, [ebx+8]
+			mov rstate_hk, eax
+			mov eax, _eax
+		strt:
+			mov     eax, [ebp - 2Ch]
+			mov     ecx, [ebp - 24h]
+			mov     esi, [ebx + 8]
+			push    1
+			mov     eax, [eax + 0Ch]
+			mov[ebp - 0A8h], eax
+			mov     eax, [ebp - 24h]
+			sub     eax, edi
+			mov     dword ptr[ebp - 0A0h], 7
+			mov[ecx], eax
+			mov     eax, edx
+			shr     eax, 12h
+			and     edx, 3FFFFh
+			movzx   eax, al
+			shl     eax, 4
+			add     eax, [ebp - 8]
+			push    eax
+			shl     edx, 4
+			lea     eax, [ebp - 0A8h]
+			add     edx, [ebp - 10h]
+			push    edx
+			push    eax
 		jmp pro_out
 	}
 }
 
 void Init(){
-void* old = placeHook(format(0x719CF0), vm_hook);
+	void* old = placeHook(format(0x719F09), vm_hook);
 	do{ Sleep(1); } while (rstate_hk == 0);
-	placeHook(format(0x719CF0), old, 1);
+	placeHook(format(0x719F09), old, 1);
+	rbx::settop(rstate_hk, 0);
+	rstate_hk = rbx::newthread(rstate_hk);
 	rbx::getfield(rstate_hk, -10002, "print");
-	rbx::pushstring(rstate_hk, "hello world!");
+	rbx::pushstring(rstate_hk, "hello world");
 	rbx::pcall(rstate_hk, 1, 0, 0);
 }
 
