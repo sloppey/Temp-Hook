@@ -24,7 +24,7 @@ Example (Getting roblox's lua state by hooking onto the VM)
 ```C
 DWORD pro_out = format(0x719F51);
 int rstate_hk=0;
-__declspec(naked) void vm_hook(int rs, int i){
+__declspec(naked) void vm_hook(){
 	DWORD _eax;
 	__asm{
 
