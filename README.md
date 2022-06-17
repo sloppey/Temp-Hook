@@ -20,7 +20,7 @@ void* placeHook(DWORD address, void* hook, bool revert = false){
 	}
 }
 ```
-Example (Getting roblox's lua state by hooking onto the VM)
+Example (Getting lua state by hooking onto the VM)
 ```C
 DWORD pro_out = format(0x719F51);
 int rstate_hk=0;
@@ -64,11 +64,7 @@ void Init(){
 	void* old = placeHook(format(0x719F09), vm_hook);
 	do{ Sleep(1); } while (rstate_hk == 0);
 	placeHook(format(0x719F09), old, 1);
-	rbx::settop(rstate_hk, 0);
-	rstate_hk = rbx::newthread(rstate_hk);
-	rbx::getfield(rstate_hk, -10002, "print");
-	rbx::pushstring(rstate_hk, "hello world");
-	rbx::pcall(rstate_hk, 1, 0, 0);
+	//rstate_hk
 }
 
 
