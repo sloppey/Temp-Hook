@@ -22,7 +22,7 @@ void* placeHook(DWORD address, void* hook, bool revert = false){
 ```
 Example (Getting lua state by hooking onto the VM)
 ```C
-DWORD pro_out = format(0x719F51);
+DWORD pro_out = loc;
 int rstate_hk=0;
 __declspec(naked) void vm_hook(){
 	DWORD _eax;
@@ -40,32 +40,11 @@ __declspec(naked) void vm_hook(){
 			push    1
 			mov     eax, [eax + 0Ch]
 			mov[ebp - 0A8h], eax
-			mov     eax, [ebp - 24h]
-			sub     eax, edi
-			mov     dword ptr[ebp - 0A0h], 7
-			mov[ecx], eax
-			mov     eax, edx
-			shr     eax, 12h
-			and     edx, 3FFFFh
-			movzx   eax, al
-			shl     eax, 4
-			add     eax, [ebp - 8]
-			push    eax
-			shl     edx, 4
-			lea     eax, [ebp - 0A8h]
-			add     edx, [ebp - 10h]
-			push    edx
-			push    eax
+			
 		jmp pro_out
 	}
 }
 
-void Init(){
-	void* old = placeHook(format(0x719F09), vm_hook);
-	do{ Sleep(1); } while (rstate_hk == 0);
-	placeHook(format(0x719F09), old, 1);
-	//rstate_hk
-}
 
 
 ```
